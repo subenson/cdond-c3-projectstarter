@@ -12,9 +12,8 @@
     - ansible_host_key_checking: false
     - ansible_stdout_callback: yaml
   pre_tasks:
-    - name: Wait 120 seconds for target connection to become reachable/usable.
-      ansible.builtin.pause:
-        seconds: 120  # I changed it to 60s. 600s wait time every run is unnecessary and unworkable.
+    - name: Wait 600 seconds for target connection to become reachable/usable
+      ansible.builtin.wait_for_connection:
     - name: "install python for Ansible."
       become: yes
       register: aptinstall
