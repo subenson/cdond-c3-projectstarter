@@ -162,7 +162,7 @@ jobs:
             yum install -y tar
             yum install -y gzip
       - add_ssh_keys:
-          fingerprints: ["43:ba:c5:47:17:67:e0:15:40:93:bb:d9:58:6f:5c:e6"]
+          fingerprints: ["cd:e8:0c:b2:0e:d3:9d:9c:a0:73:ee:45:fc:e7:da:cf"]
       - attach_workspace:
           at: ~/
       - run:
