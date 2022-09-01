@@ -34,7 +34,7 @@ commands:
 jobs:
   build-frontend:
     docker:
-      - image: cimg/node:18.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -50,7 +50,7 @@ jobs:
           key: frontend-build
   build-backend:
     docker:
-      - image: cimg/node:18.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -77,7 +77,7 @@ jobs:
             npm run test
   test-backend:
     docker:
-      - image: cimg/node:18.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -88,7 +88,7 @@ jobs:
             npm run test
   scan-frontend:
     docker:
-      - image: cimg/node:18.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -100,7 +100,7 @@ jobs:
             npm audit --audit-level=critical
   scan-backend:
     docker:
-      - image: cimg/node:18.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -171,7 +171,7 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
   run-migrations:
     docker:
-      - image: cimg/node:18.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -191,18 +191,18 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
   deploy-frontend:
     docker:
-      - image: cimg/node:18.8.0
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - run:
-          name: Update
-          command: sudo apt update
+          name: Install NPM
+          command: apk add --update npm
       - run:
           name: Install Ansible
-          command: sudo apt install -y ansible
+          command: apk add --update ansible
       - run:
           name: Install AWS CLI
-          command: sudo apt install -y awscli
+          command: pip3 install awscli
       - run:
           name: Get backend url
           command: |
