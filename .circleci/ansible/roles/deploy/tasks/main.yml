@@ -3,17 +3,18 @@
   become: yes
   copy:
     src: "{{ artifact_filename }}"
-    dest: "~/{{ artifact_filename }}"
+    dest: "{{ artifact_filename }}"
     backup: yes
 
-- name: "Make web directory"
-  become: no
-  command: mkdir -p ~/web
+- name: Make web directory
+  file:
+    path: ~/web
+    state: directory
 
 - name: "Extract Dist"
   become: yes
   unarchive:
-    src: "~/{{ artifact_filename }}"
+    src: "{{ artifact_filename }}"
     dest: ~/web/
 
 - name: "Move into web directory"
