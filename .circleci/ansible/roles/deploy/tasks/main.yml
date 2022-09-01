@@ -1,0 +1,33 @@
+---
+- name: "Copy files"
+  become: yes
+  copy:
+    src: /{{ artifact_filename }}
+    dest: ~/
+    backup: yes
+
+- name: "Make web directory"
+  become: no
+  command: mkdir -p ~/web
+
+- name: "Extract Dist"
+  become: yes
+  unarchive:
+    src: ~/{{ artifact_filename }}
+    dest: ~/web/
+
+- name: "Move into web directory"
+  become: no
+  command: cd ~/web
+
+- name: "install pm2"
+  become: yes
+  command: npm install
+
+- name: "stop pm2"
+  become: no
+  command: pm2 stop default
+
+- name: "start pm2"
+  become: no
+  command: pm2 start npm -- start
