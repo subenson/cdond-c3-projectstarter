@@ -14,15 +14,18 @@
 
 - name: "install pm2"
   become: yes
-  chdir: ~/web
-  command: npm install
+  command:
+    cmd: npm install
+    chdir: ~/web
 
 - name: "stop pm2"
   become: no
-  chdir: ~/web
-  command: pm2 stop default
+  command:
+    cmd: pm2 stop default
+    chdir: ~/web
 
 - name: "start pm2"
   become: no
-  chdir: ~/web
-  command: pm2 start npm -- start
+  command:
+    cmd: pm2 start npm -- start
+    chdir: ~/web
