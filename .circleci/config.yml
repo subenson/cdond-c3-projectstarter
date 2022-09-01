@@ -40,8 +40,6 @@ jobs:
       - run:
           name: Update
           command: sudo apt update
-    steps:
-      - checkout
       - restore_cache:
           keys: [frontend-build]
       - run:
