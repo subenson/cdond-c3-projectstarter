@@ -2,8 +2,8 @@
 - name: "Copy files"
   become: yes
   copy:
-    src: {{ artifact_filename }}
-    dest: ~/{{ artifact_filename }}
+    src: "{{ artifact_filename }}"
+    dest: "~/{{ artifact_filename }}"
     backup: yes
 
 - name: "Make web directory"
@@ -13,7 +13,7 @@
 - name: "Extract Dist"
   become: yes
   unarchive:
-    src: ~/{{ artifact_filename }}
+    src: "~/{{ artifact_filename }}"
     dest: ~/web/
 
 - name: "Move into web directory"
