@@ -12,18 +12,17 @@
     src: "{{ artifact_filename }}"
     dest: ~/web/
 
-- name: "Move into web directory"
-  become: no
-  command: cd ~/web
-
 - name: "install pm2"
   become: yes
+  chdir: ~/web
   command: npm install
 
 - name: "stop pm2"
   become: no
+  chdir: ~/web
   command: pm2 stop default
 
 - name: "start pm2"
   become: no
+  chdir: ~/web
   command: pm2 start npm -- start
