@@ -7,7 +7,7 @@
   #   state: directory
 
 - name: "Extract Dist"
-  become: yes
+  become: no
   unarchive:
     src: "{{ artifact_filename }}"
     dest: ~/web/
