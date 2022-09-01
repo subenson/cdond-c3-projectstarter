@@ -191,28 +191,18 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
   deploy-frontend:
     docker:
-      - image: amazon/aws-cli
+      - image: cimg/node:18.8.0
     steps:
       - checkout
       - run:
           name: Update
-          command: yum update -y
-      - run:
-          name: Install Python
-          command: yum install -y python3
+          command: apt update
       - run:
           name: Install Ansible
-          command: |
-            amazon-linux-extras enable ansible2
-            yum install -y ansible
+          command: apt install -y ansible
       - run:
-          name: Install Node
-          command: |
-            curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-            yum install -y nodejs
-      - run:
-          name: Install NPM
-          command: yum install -y npm
+          name: Install AWS CLI
+          command: apt install -y awscli
       - run:
           name: Get backend url
           command: |
