@@ -9,18 +9,17 @@
     src: "{{ artifact_filename }}"
     dest: ~/web/
 
-- name: "install pm2"
-  become: yes
+- name: "install dist"
   command: npm install
   args:
-    chdir: /home/ubuntu/web
+    chdir: /home/ubuntu/web/dist
 
 - name: "stop pm2"
   command: pm2 stop default
   args:
-    chdir: ~/web
+    chdir: /home/ubuntu/web/dist
 
 - name: "start pm2"
   command: pm2 start npm -- start
   args:
-    chdir: ~/web
+    chdir: /home/ubuntu/web/dist
