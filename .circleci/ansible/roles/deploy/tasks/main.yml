@@ -1,31 +1,26 @@
 ---
 - name: Make web directory
-  become: no
-  command: mkdir -p ~/web
-  # file:
-  #   path: ~/web
-  #   state: directory
+  file:
+    path: ~/web
+    state: directory
 
 - name: "Extract Dist"
-  become: no
   unarchive:
     src: "{{ artifact_filename }}"
     dest: ~/web/
 
 - name: "install pm2"
   become: yes
-  command:
-    cmd: npm install
+  command: npm install
+  args:
     chdir: ~/web
 
 - name: "stop pm2"
-  become: no
-  command:
-    cmd: pm2 stop default
+  command: pm2 stop default
+  args:
     chdir: ~/web
 
 - name: "start pm2"
-  become: no
-  command:
-    cmd: pm2 start npm -- start
+  command: pm2 start npm -- start
+  args:
     chdir: ~/web
