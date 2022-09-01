@@ -21,6 +21,7 @@ commands:
     steps:
       - run:
           name: Revert migrations
+          when: on_fail
           command: |
             SUCCESS = curl -k https://kvdb.io/UM65UzGhLPq856btNG1woq/migration_<<parameters.workflow_id>>
             if(( $SUCCESS==1 ));
@@ -206,7 +207,9 @@ jobs:
             yum install -y ansible
       - run:
           name: Install Node
-          command: yum install -y nodejs
+          command: |
+            curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+            yum install -y nodejs
       - run:
           name: Install NPM
           command: yum install -y npm
