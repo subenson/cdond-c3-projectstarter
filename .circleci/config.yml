@@ -225,26 +225,19 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
   deploy-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
           fingerprints: ["ad:b5:7f:f7:dd:b6:65:ec:51:78:2e:8a:23:d5:c9:79"]
       - run:
-          name: Update
-          command: yum update -y
-      - run:
-          name: Install dependencies
-          command: |
-            yum install -y tar
-            yum install -y gzip
-      - attach_workspace:
-          at: ~/
+          name: Install NPM
+          command: apk add --update npm
       - run:
           name: Install Ansible
-          command: |
-            amazon-linux-extras enable ansible2
-            yum install -y ansible
+          command: apk add --update ansible
+      - attach_workspace:
+          at: ~/
       - run:
           name: Deploy backend
           command: |
