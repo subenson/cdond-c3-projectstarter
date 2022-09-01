@@ -13,7 +13,7 @@
   become: yes
   command: npm install
   args:
-    chdir: ~/web
+    chdir: /home/ubuntu/web
 
 - name: "stop pm2"
   command: pm2 stop default
