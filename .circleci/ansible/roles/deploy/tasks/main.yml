@@ -1,16 +1,4 @@
 ---
-- name: Make files directory
-  file:
-    path: ~/files
-    state: directory
-
-- name: "Copy files"
-  become: yes
-  copy:
-    src: "{{ artifact_filename }}"
-    dest: ~/files/"{{ artifact_filename }}"
-    backup: yes
-
 - name: Make web directory
   file:
     path: ~/web
@@ -19,7 +7,7 @@
 - name: "Extract Dist"
   become: yes
   unarchive:
-    src: ~/files/"{{ artifact_filename }}"
+    src: "{{ artifact_filename }}"
     dest: ~/web/
 
 - name: "Move into web directory"
