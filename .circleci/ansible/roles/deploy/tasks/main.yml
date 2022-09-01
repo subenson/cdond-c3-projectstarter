@@ -2,8 +2,8 @@
 - name: "Copy files"
   become: yes
   copy:
-    src: /{{ artifact_filename }}
-    dest: ~/
+    src: {{ artifact_filename }}
+    dest: ~/{{ artifact_filename }}
     backup: yes
 
 - name: "Make web directory"
