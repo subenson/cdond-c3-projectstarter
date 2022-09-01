@@ -258,6 +258,7 @@ jobs:
             mv artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz .circleci/ansible/roles/deploy/files/
       - run:
           name: Run backend playbook
+          command: |
             cat .circleci/ansible/inventory.txt
             ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/deploy-backend.yml --extra-vars "artifact_filename=artifact-${CIRCLE_WORKFLOW_ID:0:7}.tar.gz"
       - revert-migrations:
