@@ -239,6 +239,9 @@ jobs:
       - run:
           name: Install Ansible
           command: apk add --update ansible
+      - run:
+          name: Install AWS CLI
+          command: pip3 install awscli
       - attach_workspace:
           at: ~/
       - run:
