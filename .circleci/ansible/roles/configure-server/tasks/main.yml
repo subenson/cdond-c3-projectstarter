@@ -9,13 +9,17 @@
   apt:
     upgrade: yes
 
-- name: "install dependencies"
-  become: yes
+- name: "install NodeJS"
   apt:
-    name: ["nodejs", "npm"]
+    name: "nodejs"
     state: latest
-    update_cache: yes
+
+- name: "install NPM"
+  apt:
+    name: "npm"
+    state: latest
 
 - name: "install pm2"
-  become: yes
-  command: npm install pm2 --global
+  npm:
+    name: pm2
+    global: yes

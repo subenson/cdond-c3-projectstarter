@@ -250,7 +250,7 @@ jobs:
             cd backend
             npm install
             npm run build
-            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz .
             cd ..
       - run:
           name: Artifact backend
