@@ -9,7 +9,12 @@
     src: "{{ artifact_filename }}"
     dest: /home/ubuntu/web/
 
-- name: "install"
+- name: "Set environment variables"
+  template:
+    src: env.j2
+    dest: /home/ubuntu/web/.env
+
+- name: "Install"
   command: npm install
   args:
     chdir: /home/ubuntu/web
@@ -19,7 +24,7 @@
 #   args:
 #     chdir: /home/ubuntu/web
 
-- name: "start pm2"
+- name: "Start pm2"
   command: pm2 start npm -- start
   args:
     chdir: /home/ubuntu/web
