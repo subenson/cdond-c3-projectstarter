@@ -1,16 +1,16 @@
 ---
 - name: Make web directory
   file:
-    path: ~/web
+    path: /home/ubuntu/web/
     state: directory
 
 - name: "Extract Dist"
   unarchive:
     src: "{{ artifact_filename }}"
-    dest: ~/web/
+    dest: /home/ubuntu/web/
 
 - name: "install dist"
-  command: npm install
+  command: npm install --global
   args:
     chdir: /home/ubuntu/web/dist
 
