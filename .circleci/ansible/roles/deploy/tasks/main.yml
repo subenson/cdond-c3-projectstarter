@@ -25,6 +25,7 @@
     chdir: /home/ubuntu/web
 
 - name: Make node_exporter user
+  become: yes
   user:
     name: node_exporter
 
@@ -47,7 +48,7 @@
   become: yes
   command: "{{ item }}"
   with_items:
-    - sudo systemctl daemon-reload
-    - sudo systemctl enable node-exporter
-    - sudo systemctl start node-exporter
-    - sudo systemctl status node-exporter
+    - systemctl daemon-reload
+    - systemctl enable node-exporter
+    - systemctl start node-exporter
+    - systemctl status node-exporter
