@@ -119,6 +119,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Store Old Workflow ID
+          command: |
+            echo $(aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" --no-paginate --output text)" >> .circleci/ansible/old_workflow_id.txt
+
+      - run:
           name: Install tar and gzip
           command: |
             yum install -y tar
@@ -147,6 +152,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+            - project/.circleci/ansible/old_workflow_id.txt
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
   configure-infrastructure:
@@ -330,9 +336,17 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install dependencies
+          command: |
+            yum update -y
+            yum install -y tar
+            yum install -y gzip
+      - attach_workspace:
+          at: ~/
+      - run:
           name: Remove old stacks and files
           command: |
-            export OldWorkflowID="$(aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" --no-paginate --output text)"
+            export OldWorkflowID=`cat .circleci/ansible/old_workflow_id.txt`
             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
