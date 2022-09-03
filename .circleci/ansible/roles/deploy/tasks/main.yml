@@ -19,11 +19,6 @@
   args:
     chdir: /home/ubuntu/web
 
-# - name: "stop pm2"
-#   command: pm2 stop default
-#   args:
-#     chdir: /home/ubuntu/web
-
 - name: "Start pm2"
   command: pm2 start npm -- start
   args:
@@ -31,12 +26,13 @@
 
 - name: "Install node_exporter"
   become: yes
-  command: |
-    useradd --no-create-home node_exporter
-    wget https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz
-    tar xzf node_exporter-1.0.1.linux-amd64.tar.gz
-    sudo cp node_exporter-1.0.1.linux-amd64/node_exporter /usr/local/bin/node_exporter
-    rm -rf node_exporter-1.0.1.linux-amd64.tar.gz node_exporter-1.0.1.linux-amd64
+  command: "{{ item }}"
+  with_items:
+    - id -u node_exporter &>/dev/null || useradd node_exporter
+    - wget https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz
+    - tar xzf node_exporter-1.0.1.linux-amd64.tar.gz
+    - sudo cp node_exporter-1.0.1.linux-amd64/node_exporter /usr/local/bin/node_exporter
+    - rm -rf node_exporter-1.0.1.linux-amd64.tar.gz node_exporter-1.0.1.linux-amd64
 
 - name: "Configure node_exporter"
   become: yes
@@ -46,8 +42,9 @@
 
 - name: "Configure systemd"
   become: yes
-  command: |
-    sudo systemctl daemon-reload
-    sudo systemctl enable node-exporter
-    sudo systemctl start node-exporter
-    sudo systemctl status node-exporter
+  command: "{{ item }}"
+  with_items:
+    - sudo systemctl daemon-reload
+    - sudo systemctl enable node-exporter
+    - sudo systemctl start node-exporter
+    - sudo systemctl status node-exporter
