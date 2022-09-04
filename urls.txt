@@ -1,5 +1,5 @@
 URL01=https://github.com/subenson/cdond-c3-projectstarter
-URL02=http://udapeople-aba30fe.s3-website-us-east-1.amazonaws.com/
+URL02=http://udapeople-521a41c.s3-website-us-east-1.amazonaws.com/#/employees
 URL03=http://d29pnw25sy5xd0.cloudfront.net/#/employees
-URL04=http://44.202.128.162:3030/api/status
-URL05=http://ec2-3-87-7-39.compute-1.amazonaws.com:9090/targets
+URL04=http://54.196.236.120:3030/api/status
+URL05=http://ec2-54-234-54-104.compute-1.amazonaws.com:9090/targets
